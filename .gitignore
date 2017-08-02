@@ -1,2 +1,5 @@
 
 .DS_Store
+src/js/jquery.bxslider.min.js
+src/scss/jquery.bxslider.css
+/node_modules/**

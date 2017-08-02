@@ -34,18 +34,26 @@ Object.defineProperty(exports, "__esModule", {
 var products = exports.products = function products(data) {
 
       for (var i = 0; i < data.products.length; i++) {
-            var image = ' </p> <img src=" ' + data.products[i].thumbnailImage + ' "> </p>';
-            var price = '<p class="price">' + data.products[i].regularPrice;+'</p>';
-            var brand = '<p class="brand">' + data.products[i].fulfilledBy;+'</p>';
-            var name = '<p class="name">' + data.products[i].name;+'</p>';
-            //let htmlElements = image + price + brand;
+
+            var image = ' <img src=" ' + data.products[i].largeImage + ' "> ';
+            var priceDisplay = '<p class="price">' + data.products[i].regularPrice + '</p>';
+            var brand = '<p class="brand">' + data.products[i].manufacturer + '</p>';
+            var name = '<p class="name">' + data.products[i].name + '</p>';
+
+            var sku = data.products[i].sku;
+            var price = data.products[i].regularPrice;
+
+            var cartButton = '<button class="addtocart" data-sku="' + sku + '" data-price="' + price + '"> ADD TO CART </button>';
 
             var createDiv = $("<div></div>");
-            createDiv.addClass('singleproduct', 'wallop-item');
+            createDiv.addClass('singleproduct');
             $('#content').append(createDiv);
-            createDiv.append(brand + name + image + price);
+            createDiv.append(brand + image + name + priceDisplay + cartButton);
       };
 };
+
+// <div><button class="addtocart" data-sku="sku" data-price="price"> ADD TO CART </button></div>
+// '<div><button class="addtocart" data-sku="'+sku+'" data-price="'+price+'"> ADD TO CART </button></div>'
 
 },{}],3:[function(require,module,exports){
 "use strict";
@@ -56,11 +64,16 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*import Cart from "./cart";*/
 
+//import {productutil} from "./productutil";
+
+
 var _bestbuy = require("./bestbuy");
 
 var _bestbuy2 = _interopRequireDefault(_bestbuy);
 
 var _carousel = require("./carousel");
+
+var _productutil = require("./productutil");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -74,6 +87,8 @@ var App = function () {
 		this.url = "https://api.bestbuy.com/v1/products";
 		this.initBBCall();
 		this.eventHandler();
+		this.addtocart();
+		//this.atc();
 	}
 
 	_createClass(App, [{
@@ -81,22 +96,28 @@ var App = function () {
 		value: function eventHandler() {
 			var _this = this;
 
-			$("button").on('click', function (e) {
-				$('#content').empty();
+			$(".category").on('click', function (e) {
+				$('#content').show(1);
 
 				var val = e.target.value;
-				//console.log(e.target.value);
 				_this.url = _this.baseUrl + val;
-				//console.log(this.url);
 				_this.initBBCall();
 			});
 		}
 	}, {
+		key: "addtocart",
+		value: function addtocart() {
+			var atc = new _productutil.productutilee();
+			atc.addtocart();
+		}
+	}, {
 		key: "initBBCall",
 		value: function initBBCall() {
-			console.log(this.url);
+			//console.log(this.url);
 			(0, _bestbuy2.default)({ url: this.url, api: "8ccddf4rtjz5k5btqam84qak" }).then(function (data) {
+				$('#content').empty();
 				(0, _carousel.products)(data);
+				//productutil(data);
 			}).catch(function (error) {
 				console.log("warning Christopher Robins... Error");
 				console.log(error);
@@ -113,4 +134,52 @@ var x = new App();
 
 $('#mainpage').click();
 
-},{"./bestbuy":1,"./carousel":2}]},{},[3]);
+},{"./bestbuy":1,"./carousel":2,"./productutil":4}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//
+// export const productutil = (data) => {
+//
+//
+//             $(".addtocart").click(function(){
+//
+//                 let price = $(this).data("price");
+//                 let sku = $(this).data("sku");
+//                 console.log(price, sku);
+//             });
+//
+// }
+
+
+var productutilee = exports.productutilee = function () {
+  function productutilee() {
+    _classCallCheck(this, productutilee);
+  }
+
+  _createClass(productutilee, [{
+    key: "addtocart",
+    value: function addtocart() {
+      $(document).on("click", ".addtocart", function () {
+
+        var price = $(this).data("price");
+        var sku = $(this).data("sku");
+        console.log(price, sku);
+        var cartNum = document.getElementById("cartTotalItems");
+        var count = cartNum.innerHTML;
+        cartNum.innerHTML = parseInt(count) + 1;
+      });
+    }
+  }]);
+
+  return productutilee;
+}();
+
+},{}]},{},[3]);

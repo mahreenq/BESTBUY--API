@@ -4,21 +4,23 @@
         <link rel="stylesheet" type="text/css" href="./css/main.css">
     </head>
     <body>
-        <h2>Testing ES6 + Babel</h2>
-        <b>Name :</b> <span id="nameSpan"></span>
+        <h2>BestBuy...</h2>
+        <!-- <b>Name :</b> <span id="nameSpan"></span> -->
+        <div class= "cart"> <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i> </div>
+        <div id="cartTotalItems"> 0 </div>
         <div id ="menuForItems">
-          <button id="mainpage" value="((categoryPath.id=abcat0502000))"> Laptops </button>
-          <button value="((categoryPath.id=pcmcat209400050001))"> Cell Phones </button>
-          <button  value="((categoryPath.id=abcat0101000))"> Television </button>
-          <button  value="((categoryPath.id=abcat0204000))"> Headphones </button>
-        <div id="content" class = "wallop"> </div>
+          <button class="category" id="mainpage" value="((categoryPath.id=abcat0502000))"> Laptops </button>
+          <button class="category" value="((categoryPath.id=pcmcat209400050001))"> Cell Phones </button>
+          <button class="category" value="((categoryPath.id=abcat0101000))"> Television </button>
+          <button class="category" value="((categoryPath.id=abcat0204000))"> Headphones </button>
+        </div>
+        <div id="content"> </div>
 
 
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- <script src="jquery.bxslider.min.js"></script>
-        <link href="jquery.bxslider.css" rel="stylesheet"/> -->
+        <script src="https://use.fontawesome.com/3d160053b9.js"></script>
         <script src="js/bundle.js"></script>
     </body>
 </html>
