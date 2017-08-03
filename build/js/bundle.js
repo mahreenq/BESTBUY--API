@@ -148,7 +148,7 @@ $('#mainpage').click();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -156,39 +156,53 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var productutil = exports.productutil = function () {
-    function productutil() {
-        _classCallCheck(this, productutil);
+  function productutil() {
+    _classCallCheck(this, productutil);
+  }
+
+  _createClass(productutil, [{
+    key: "addtocart",
+    value: function addtocart(sku, product) {
+
+      if (sessionStorage.getItem(sku) == undefined) {
+        sessionStorage.setItem(sku, JSON.stringify(product));
+      } else {
+        var oldvalue = JSON.parse(sessionStorage.getItem(sku));
+        var newvalue = oldvalue;
+        newvalue.qty += product.qty;
+
+        //  let qtyhtml = document.getElementbyId("")
+        // console.log(newvalue.qty);
+        // console.log(product.price * newvalue.qty);
+
+
+        // console.log(sessionStorage.getItem(product.qty));
+        // console.log(sessionStorage.getItem(sku));
+
+        var allkeys = "";
+        var item = "";
+        var cartobj = "";
+
+        for (var i = 0; i < sessionStorage.length; i++) {
+          //console.log (sessionStorage.key(i));
+          allkeys = sessionStorage.key(i);
+
+          item = sessionStorage.getItem(allkeys);
+          cartobj = JSON.parse(item);
+          //console.log(cartobj);
+          console.log(cartobj.qty);
+        };
+        sessionStorage.setItem(sku, JSON.stringify(newvalue));
+        //console.log(sessionStorage.key(0));
+      };
+
+      //count items in cart
+      var cartNum = document.getElementById("cartTotalItems");
+      cartNum.innerHTML = sessionStorage.length;
     }
+  }]);
 
-    _createClass(productutil, [{
-        key: "addtocart",
-        value: function addtocart(sku, product) {
-
-            if (sessionStorage.getItem(sku) == undefined) {
-                sessionStorage.setItem(sku, JSON.stringify(product));
-            } else {
-                var oldvalue = JSON.parse(sessionStorage.getItem(sku));
-                var newvalue = oldvalue;
-                newvalue.qty += product.qty;
-                console.log(newvalue.qty);
-                console.log(product.price * newvalue.qty);
-
-                // console.log(sessionStorage.getItem(product.qty));
-                // console.log(sessionStorage.getItem(sku));
-
-
-                sessionStorage.setItem(sku, JSON.stringify(newvalue));
-
-                console.log(sessionStorage.key(0));
-            }
-
-            //count items in cart
-            var cartNum = document.getElementById("cartTotalItems");
-            cartNum.innerHTML = sessionStorage.length;
-        }
-    }]);
-
-    return productutil;
+  return productutil;
 }();
 
 // export class productutil {

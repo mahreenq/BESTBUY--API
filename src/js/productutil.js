@@ -11,18 +11,38 @@ export class productutil{
         let oldvalue = JSON.parse(sessionStorage.getItem(sku));
         let newvalue = oldvalue;
         newvalue.qty += product.qty;
-        console.log(newvalue.qty);
-        console.log(product.price * newvalue.qty);
+
+
+      //  let qtyhtml = document.getElementbyId("")
+        // console.log(newvalue.qty);
+        // console.log(product.price * newvalue.qty);
+
 
         // console.log(sessionStorage.getItem(product.qty));
         // console.log(sessionStorage.getItem(sku));
 
+          let allkeys = "";
+          let item = "";
+          let cartobj ="";
 
+
+        for (let i=0; i<sessionStorage.length; i++) {
+          //console.log (sessionStorage.key(i));
+          allkeys = sessionStorage.key(i);
+
+          item = sessionStorage.getItem(allkeys);
+          cartobj = JSON.parse(item);
+          //console.log(cartobj);
+          console.log(cartobj.qty);
+
+
+
+
+        };
         sessionStorage.setItem(sku, JSON.stringify(newvalue));
+         //console.log(sessionStorage.key(0));
 
-         console.log(sessionStorage.key(0));
-
-    }
+    };
 
 
 
