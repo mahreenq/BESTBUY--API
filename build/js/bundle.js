@@ -62,10 +62,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*import Cart from "./cart";*/
-
-//import {productutil} from "./productutil";
-
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _bestbuy = require("./bestbuy");
 
@@ -88,7 +85,6 @@ var App = function () {
 		this.initBBCall();
 		this.eventHandler();
 		this.addtocart();
-		//this.atc();
 	}
 
 	_createClass(App, [{
@@ -104,11 +100,25 @@ var App = function () {
 				_this.initBBCall();
 			});
 		}
+
+		// addtocart(){
+		// 	let atc= new productutil;
+		// 	atc.addtocart();
+		// }
+
 	}, {
 		key: "addtocart",
 		value: function addtocart() {
-			var atc = new _productutil.productutilee();
-			atc.addtocart();
+			$(document).on('click', '.addtocart', function () {
+				var sku = $(this).data("sku");
+				var product = {
+					price: $(this).data("price"),
+					qty: 1
+				};
+
+				var atc = new _productutil.productutil();
+				atc.addtocart(sku, product);
+			});
 		}
 	}, {
 		key: "initBBCall",
@@ -138,48 +148,69 @@ $('#mainpage').click();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-//
-// export const productutil = (data) => {
-//
-//
-//             $(".addtocart").click(function(){
-//
-//                 let price = $(this).data("price");
-//                 let sku = $(this).data("sku");
-//                 console.log(price, sku);
-//             });
-//
-// }
-
-
-var productutilee = exports.productutilee = function () {
-  function productutilee() {
-    _classCallCheck(this, productutilee);
-  }
-
-  _createClass(productutilee, [{
-    key: "addtocart",
-    value: function addtocart() {
-      $(document).on("click", ".addtocart", function () {
-
-        var price = $(this).data("price");
-        var sku = $(this).data("sku");
-        console.log(price, sku);
-        var cartNum = document.getElementById("cartTotalItems");
-        var count = cartNum.innerHTML;
-        cartNum.innerHTML = parseInt(count) + 1;
-      });
+var productutil = exports.productutil = function () {
+    function productutil() {
+        _classCallCheck(this, productutil);
     }
-  }]);
 
-  return productutilee;
+    _createClass(productutil, [{
+        key: "addtocart",
+        value: function addtocart(sku, product) {
+
+            if (sessionStorage.getItem(sku) == undefined) {
+                sessionStorage.setItem(sku, JSON.stringify(product));
+            } else {
+                var oldvalue = JSON.parse(sessionStorage.getItem(sku));
+                var newvalue = oldvalue;
+                newvalue.qty += product.qty;
+                console.log(newvalue.qty);
+                console.log(product.price * newvalue.qty);
+
+                // console.log(sessionStorage.getItem(product.qty));
+                // console.log(sessionStorage.getItem(sku));
+
+
+                sessionStorage.setItem(sku, JSON.stringify(newvalue));
+
+                console.log(sessionStorage.key(0));
+            }
+
+            //count items in cart
+            var cartNum = document.getElementById("cartTotalItems");
+            cartNum.innerHTML = sessionStorage.length;
+        }
+    }]);
+
+    return productutil;
 }();
+
+// export class productutil {
+//   constructor(){
+//
+//   }
+//
+//   addtocart(){
+//     $(document).on("click", ".addtocart", function (){
+//
+//             let price = $(this).data("price");
+//             let sku = $(this).data("sku");
+//             console.log(price, sku);
+//             var cartNum = document.getElementById("cartTotalItems");
+//             var count = cartNum.innerHTML;
+//             cartNum.innerHTML = parseInt(count) +1;
+//
+//
+//
+//     });
+//
+//   }
+// }
 
 },{}]},{},[3]);

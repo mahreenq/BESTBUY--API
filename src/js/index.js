@@ -1,10 +1,7 @@
-/*import Cart from "./cart";*/
 
 import request from "./bestbuy";
 import {products} from "./carousel";
-//import {productutil} from "./productutil";
-import {productutilee} from "./productutil";
-
+import {productutil} from "./productutil";
 
 
 export default class App{
@@ -14,7 +11,7 @@ export default class App{
 		this.initBBCall();
 		this.eventHandler ();
 		this.addtocart();
-		//this.atc();
+
 	}
  	eventHandler(){
 
@@ -28,13 +25,23 @@ export default class App{
 });
 }
 
+// addtocart(){
+// 	let atc= new productutil;
+// 	atc.addtocart();
+// }
+
 addtocart(){
-	let atc= new productutilee;
-	atc.addtocart();
-}
+        $(document).on('click', '.addtocart', function(){
+						let sku = $(this).data("sku");
+						let product = {
+							price : $(this).data("price"),
+							qty : 1,
+						}
 
-
-
+            let atc= new productutil;
+            atc.addtocart(sku,product);
+        });
+    }
 
 	initBBCall () {
 		//console.log(this.url);
@@ -51,7 +58,6 @@ addtocart(){
 	}
 }
 let x = new App;
-
 
 
 
