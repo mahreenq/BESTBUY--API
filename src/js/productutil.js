@@ -44,7 +44,7 @@ export class productutil{
           var createDiv = $("<div></div>");
           createDiv.addClass('singleCartItem');
           $('#popup').append(createDiv);
-          createDiv.append(`SKU:${allkeys}            QUANTITY:${itemsincart}         TOTAL:$${priceincart}`);
+          createDiv.append(`SKU:${allkeys} QUANTITY:${itemsincart} TOTAL:$${priceincart}`);
 
 
           // let popup = document.getElementById("popup");
@@ -56,6 +56,8 @@ export class productutil{
 
         };
           sessionStorage.setItem(sku, JSON.stringify(newvalue));
+
+
 
 
 

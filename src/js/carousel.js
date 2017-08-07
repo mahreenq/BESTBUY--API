@@ -18,7 +18,7 @@ export const products = (data) => {
         var createDiv = $("<div></div>");
         createDiv.addClass('singleproduct');
         $('#content').append(createDiv);
-        createDiv.append(brand + image+  name  + priceDisplay + cartButton);
+        createDiv.append(brand + name+  image  + priceDisplay + cartButton);
 
 
 

@@ -48,7 +48,7 @@ var products = exports.products = function products(data) {
             var createDiv = $("<div></div>");
             createDiv.addClass('singleproduct');
             $('#content').append(createDiv);
-            createDiv.append(brand + image + name + priceDisplay + cartButton);
+            createDiv.append(brand + name + image + priceDisplay + cartButton);
       };
 };
 
@@ -202,7 +202,7 @@ var productutil = exports.productutil = function () {
           var createDiv = $("<div></div>");
           createDiv.addClass('singleCartItem');
           $('#popup').append(createDiv);
-          createDiv.append("SKU:" + allkeys + "            QUANTITY:" + itemsincart + "         TOTAL:$" + priceincart);
+          createDiv.append("SKU:" + allkeys + " QUANTITY:" + itemsincart + " TOTAL:$" + priceincart);
 
           // let popup = document.getElementById("popup");
           // popup.innerHTML = (`SKU:${allkeys}    QUANTITY:${itemsincart}   TOTAL:$${priceincart}`);
