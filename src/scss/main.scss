@@ -1,4 +1,44 @@
 
-h2 {
-  color: pink;
+
+@mixin mainBackgroundColour{
+  background-color: #4f856c,
+}
+
+@mixin buttonFontColour {
+  color:white;
+}
+.cart{
+  width: 4rem;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem;
+
+  @include mainBackgroundColour;
+  @include buttonFontColour;
+
+}
+
+#cartlogo {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#cartTotalItems{
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  @include mainBackgroundColour;
+  @include buttonFontColour;
+  padding: 1rem;
+  border: none;
+
+}
+
+#menuforItems {
+    @include mainBackgroundColour;
+    display: flex;
+    justify-content: space-around;
 }

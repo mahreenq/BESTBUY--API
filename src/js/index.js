@@ -36,6 +36,7 @@ addtocart(){
 						let product = {
 							price : $(this).data("price"),
 							qty : 1,
+
 						}
 
             let atc= new productutil;
@@ -48,6 +49,7 @@ addtocart(){
 		request({url:this.url, api:"8ccddf4rtjz5k5btqam84qak"})
 		.then(data => {
 			$('#content').empty();
+
 			products(data);
 			//productutil(data);
 		})

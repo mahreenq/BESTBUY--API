@@ -1,1 +1,1 @@
-h2{color:pink}
+.cart{width:4rem;display:flex;justify-content:flex-end;padding:.5rem;background-color:#4f856c;color:white}#cartlogo{padding:.5rem;display:flex;justify-content:flex-end}#cartTotalItems{display:flex;justify-content:flex-end}button{background-color:#4f856c;color:white;padding:1rem;border:0}#menuforItems{background-color:#4f856c;display:flex;justify-content:space-around}

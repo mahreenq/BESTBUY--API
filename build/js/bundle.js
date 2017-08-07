@@ -114,6 +114,7 @@ var App = function () {
 				var product = {
 					price: $(this).data("price"),
 					qty: 1
+
 				};
 
 				var atc = new _productutil.productutil();
@@ -126,6 +127,7 @@ var App = function () {
 			//console.log(this.url);
 			(0, _bestbuy2.default)({ url: this.url, api: "8ccddf4rtjz5k5btqam84qak" }).then(function (data) {
 				$('#content').empty();
+
 				(0, _carousel.products)(data);
 				//productutil(data);
 			}).catch(function (error) {
@@ -176,27 +178,40 @@ var productutil = exports.productutil = function () {
         // console.log(product.price * newvalue.qty);
 
 
-        // console.log(sessionStorage.getItem(product.qty));
-        // console.log(sessionStorage.getItem(sku));
-
         var allkeys = "";
         var item = "";
         var cartobj = "";
+        var itemsincart = "";
+        var priceincart = "";
+        $('#popup').empty();
+        //  let productnameincart ="";
+
 
         for (var i = 0; i < sessionStorage.length; i++) {
           //console.log (sessionStorage.key(i));
+
           allkeys = sessionStorage.key(i);
 
           item = sessionStorage.getItem(allkeys);
           cartobj = JSON.parse(item);
-          //console.log(cartobj);
-          console.log(cartobj.qty);
+          itemsincart = cartobj.qty;
+          priceincart = cartobj.price * itemsincart;
+
+          console.log(allkeys, itemsincart, priceincart);
+
+          var createDiv = $("<div></div>");
+          createDiv.addClass('singleCartItem');
+          $('#popup').append(createDiv);
+          createDiv.append("SKU:" + allkeys + "            QUANTITY:" + itemsincart + "         TOTAL:$" + priceincart);
+
+          // let popup = document.getElementById("popup");
+          // popup.innerHTML = (`SKU:${allkeys}    QUANTITY:${itemsincart}   TOTAL:$${priceincart}`);
+          //  alert(`SKU:${allkeys}    QUANTITY:${itemsincart}   TOTAL:$${priceincart}`);
         };
         sessionStorage.setItem(sku, JSON.stringify(newvalue));
-        //console.log(sessionStorage.key(0));
       };
 
-      //count items in cart
+      // //count items in cart
       var cartNum = document.getElementById("cartTotalItems");
       cartNum.innerHTML = sessionStorage.length;
     }
