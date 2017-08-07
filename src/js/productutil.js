@@ -7,16 +7,11 @@ export class productutil{
 
       if (sessionStorage.getItem(sku)==undefined){
         sessionStorage.setItem(sku,JSON.stringify(product));
+        console.log(product);
     } else {
         let oldvalue = JSON.parse(sessionStorage.getItem(sku));
         let newvalue = oldvalue;
         newvalue.qty += product.qty;
-
-
-      //  let qtyhtml = document.getElementbyId("")
-        // console.log(newvalue.qty);
-        // console.log(product.price * newvalue.qty);
-
 
           let allkeys = "";
           let item = "";
@@ -24,7 +19,7 @@ export class productutil{
           let itemsincart ="";
           let priceincart="";
           $('#popup').empty();
-        //  let productnameincart ="";
+
 
 
         for (let i=0; i<sessionStorage.length; i++) {
@@ -38,31 +33,18 @@ export class productutil{
           priceincart = cartobj.price * itemsincart;
 
 
-          console.log(allkeys, itemsincart, priceincart);
+          //console.log(allkeys, itemsincart, priceincart);
 
 
           var createDiv = $("<div></div>");
           createDiv.addClass('singleCartItem');
           $('#popup').append(createDiv);
-          createDiv.append(`SKU:${allkeys} QUANTITY:${itemsincart} TOTAL:$${priceincart}`);
-
-
-          // let popup = document.getElementById("popup");
-          // popup.innerHTML = (`SKU:${allkeys}    QUANTITY:${itemsincart}   TOTAL:$${priceincart}`);
-        //  alert(`SKU:${allkeys}    QUANTITY:${itemsincart}   TOTAL:$${priceincart}`);
-
+          createDiv.append('SKU:'+allkeys+'   QUANTITY:'+itemsincart+'   TOTAL:'+priceincart + '<button class="removeFromCart"> REMOVE </button>');
 
 
 
         };
           sessionStorage.setItem(sku, JSON.stringify(newvalue));
-
-
-
-
-
-
-
 
 
     };
@@ -73,29 +55,22 @@ export class productutil{
           var cartNum = document.getElementById("cartTotalItems");
           cartNum.innerHTML = sessionStorage.length;
         }
+
+
+
+
+
+
+        removefromcart(sku, product){
+          $(document).on('click', '.removeFromCart', function(){
+
+            sessionStorage.removeItem(sku);
+
+          })
+        }
+
+
+
+
+
 }
-
-
-
-
-// export class productutil {
-//   constructor(){
-//
-//   }
-//
-//   addtocart(){
-//     $(document).on("click", ".addtocart", function (){
-//
-//             let price = $(this).data("price");
-//             let sku = $(this).data("sku");
-//             console.log(price, sku);
-//             var cartNum = document.getElementById("cartTotalItems");
-//             var count = cartNum.innerHTML;
-//             cartNum.innerHTML = parseInt(count) +1;
-//
-//
-//
-//     });
-//
-//   }
-// }

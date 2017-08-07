@@ -76,6 +76,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//import {removeItem} from "./removeitem";
+
+
 var App = function () {
 	function App() {
 		_classCallCheck(this, App);
@@ -85,6 +88,7 @@ var App = function () {
 		this.initBBCall();
 		this.eventHandler();
 		this.addtocart();
+		//this.removefromcart();
 	}
 
 	_createClass(App, [{
@@ -100,12 +104,6 @@ var App = function () {
 				_this.initBBCall();
 			});
 		}
-
-		// addtocart(){
-		// 	let atc= new productutil;
-		// 	atc.addtocart();
-		// }
-
 	}, {
 		key: "addtocart",
 		value: function addtocart() {
@@ -119,8 +117,22 @@ var App = function () {
 
 				var atc = new _productutil.productutil();
 				atc.addtocart(sku, product);
+				atc.removefromcart(sku, product);
 			});
 		}
+
+		// removefromcart(sku, product){
+		// 	$(document).on('click', '.removeFromCart', function(){
+		// 		let sku = $(this).data("sku");
+		// 		let product = {
+		// 			price : $(this).data("price"),
+		// 			qty : 1,
+		// 		}
+		// 		sessionStorage.removeItem(sku);
+		//
+		// 	})
+		// }
+
 	}, {
 		key: "initBBCall",
 		value: function initBBCall() {
@@ -168,15 +180,11 @@ var productutil = exports.productutil = function () {
 
       if (sessionStorage.getItem(sku) == undefined) {
         sessionStorage.setItem(sku, JSON.stringify(product));
+        console.log(product);
       } else {
         var oldvalue = JSON.parse(sessionStorage.getItem(sku));
         var newvalue = oldvalue;
         newvalue.qty += product.qty;
-
-        //  let qtyhtml = document.getElementbyId("")
-        // console.log(newvalue.qty);
-        // console.log(product.price * newvalue.qty);
-
 
         var allkeys = "";
         var item = "";
@@ -184,8 +192,6 @@ var productutil = exports.productutil = function () {
         var itemsincart = "";
         var priceincart = "";
         $('#popup').empty();
-        //  let productnameincart ="";
-
 
         for (var i = 0; i < sessionStorage.length; i++) {
           //console.log (sessionStorage.key(i));
@@ -197,16 +203,13 @@ var productutil = exports.productutil = function () {
           itemsincart = cartobj.qty;
           priceincart = cartobj.price * itemsincart;
 
-          console.log(allkeys, itemsincart, priceincart);
+          //console.log(allkeys, itemsincart, priceincart);
+
 
           var createDiv = $("<div></div>");
           createDiv.addClass('singleCartItem');
           $('#popup').append(createDiv);
-          createDiv.append("SKU:" + allkeys + " QUANTITY:" + itemsincart + " TOTAL:$" + priceincart);
-
-          // let popup = document.getElementById("popup");
-          // popup.innerHTML = (`SKU:${allkeys}    QUANTITY:${itemsincart}   TOTAL:$${priceincart}`);
-          //  alert(`SKU:${allkeys}    QUANTITY:${itemsincart}   TOTAL:$${priceincart}`);
+          createDiv.append('SKU:' + allkeys + '   QUANTITY:' + itemsincart + '   TOTAL:' + priceincart + '<button class="removeFromCart"> REMOVE </button>');
         };
         sessionStorage.setItem(sku, JSON.stringify(newvalue));
       };
@@ -215,31 +218,17 @@ var productutil = exports.productutil = function () {
       var cartNum = document.getElementById("cartTotalItems");
       cartNum.innerHTML = sessionStorage.length;
     }
+  }, {
+    key: "removefromcart",
+    value: function removefromcart(sku, product) {
+      $(document).on('click', '.removeFromCart', function () {
+
+        sessionStorage.removeItem(sku);
+      });
+    }
   }]);
 
   return productutil;
 }();
-
-// export class productutil {
-//   constructor(){
-//
-//   }
-//
-//   addtocart(){
-//     $(document).on("click", ".addtocart", function (){
-//
-//             let price = $(this).data("price");
-//             let sku = $(this).data("sku");
-//             console.log(price, sku);
-//             var cartNum = document.getElementById("cartTotalItems");
-//             var count = cartNum.innerHTML;
-//             cartNum.innerHTML = parseInt(count) +1;
-//
-//
-//
-//     });
-//
-//   }
-// }
 
 },{}]},{},[3]);
