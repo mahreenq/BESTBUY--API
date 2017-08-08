@@ -88,7 +88,7 @@ var App = function () {
 		this.initBBCall();
 		this.eventHandler();
 		this.addtocart();
-		//this.removefromcart();
+		this.updatecart();
 	}
 
 	_createClass(App, [{
@@ -117,7 +117,35 @@ var App = function () {
 
 				var atc = new _productutil.productutil();
 				atc.addtocart(sku, product);
-				atc.removefromcart(sku, product);
+			});
+		}
+	}, {
+		key: "updatecart",
+		value: function updatecart(sku, product) {
+			$(document).on('click', '.addtocart', function () {
+				sessionStorage.getItem(sku, product);
+
+				var allkeys = "";
+				var item = "";
+				var cartobj = "";
+				var itemsincart = "";
+				var priceincart = "";
+				$('#popup').empty();
+
+				for (var i = 0; i < sessionStorage.length; i++) {
+
+					allkeys = sessionStorage.key(i);
+
+					item = sessionStorage.getItem(allkeys);
+					cartobj = JSON.parse(item);
+					itemsincart = cartobj.qty;
+					priceincart = cartobj.price * itemsincart;
+
+					var createDiv = $("<div></div>");
+					createDiv.addClass('singleCartItem');
+					$('#popup').append(createDiv);
+					createDiv.append('SKU:' + allkeys + '   QUANTITY:' + itemsincart + '   TOTAL:' + priceincart + '<button class="removeFromCart"> REMOVE </button>');
+				}
 			});
 		}
 
@@ -141,7 +169,6 @@ var App = function () {
 				$('#content').empty();
 
 				(0, _carousel.products)(data);
-				//productutil(data);
 			}).catch(function (error) {
 				console.log("warning Christopher Robins... Error");
 				console.log(error);
@@ -180,37 +207,11 @@ var productutil = exports.productutil = function () {
 
       if (sessionStorage.getItem(sku) == undefined) {
         sessionStorage.setItem(sku, JSON.stringify(product));
-        console.log(product);
       } else {
         var oldvalue = JSON.parse(sessionStorage.getItem(sku));
         var newvalue = oldvalue;
         newvalue.qty += product.qty;
 
-        var allkeys = "";
-        var item = "";
-        var cartobj = "";
-        var itemsincart = "";
-        var priceincart = "";
-        $('#popup').empty();
-
-        for (var i = 0; i < sessionStorage.length; i++) {
-          //console.log (sessionStorage.key(i));
-
-          allkeys = sessionStorage.key(i);
-
-          item = sessionStorage.getItem(allkeys);
-          cartobj = JSON.parse(item);
-          itemsincart = cartobj.qty;
-          priceincart = cartobj.price * itemsincart;
-
-          //console.log(allkeys, itemsincart, priceincart);
-
-
-          var createDiv = $("<div></div>");
-          createDiv.addClass('singleCartItem');
-          $('#popup').append(createDiv);
-          createDiv.append('SKU:' + allkeys + '   QUANTITY:' + itemsincart + '   TOTAL:' + priceincart + '<button class="removeFromCart"> REMOVE </button>');
-        };
         sessionStorage.setItem(sku, JSON.stringify(newvalue));
       };
 
@@ -218,14 +219,21 @@ var productutil = exports.productutil = function () {
       var cartNum = document.getElementById("cartTotalItems");
       cartNum.innerHTML = sessionStorage.length;
     }
-  }, {
-    key: "removefromcart",
-    value: function removefromcart(sku, product) {
-      $(document).on('click', '.removeFromCart', function () {
 
-        sessionStorage.removeItem(sku);
-      });
-    }
+    //   updatecart(){
+    //
+    // };
+
+
+    // removefromcart(sku, product){
+    //   $(document).on('click', '.removeFromCart', function(){
+    //
+    //     sessionStorage.removeItem(sku);
+    //
+    //   })
+    // }
+
+
   }]);
 
   return productutil;

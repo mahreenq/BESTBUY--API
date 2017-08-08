@@ -12,7 +12,7 @@ export default class App{
 		this.initBBCall();
 		this.eventHandler ();
 		this.addtocart();
-		//this.removefromcart();
+		this.updatecart();
 
 	}
  	eventHandler(){
@@ -39,9 +39,40 @@ addtocart(){
 
             let atc= new productutil;
             atc.addtocart(sku,product);
-						atc.removefromcart(sku,product);
+
         });
     }
+
+		updatecart(sku, product){
+			$(document).on('click', '.addtocart', function(){
+			sessionStorage.getItem(sku,product)
+
+			            let allkeys = "";
+			            let item = "";
+			            let cartobj ="";
+			            let itemsincart ="";
+			            let priceincart="";
+			            $('#popup').empty();
+
+			for (let i=0; i<sessionStorage.length; i++){
+
+				    allkeys = sessionStorage.key(i);
+
+				    item = sessionStorage.getItem(allkeys);
+				    cartobj = JSON.parse(item);
+				    itemsincart =  cartobj.qty;
+				    priceincart = cartobj.price * itemsincart;
+
+				    var createDiv = $("<div></div>");
+				    createDiv.addClass('singleCartItem');
+				    $('#popup').append(createDiv);
+				    createDiv.append('SKU:'+allkeys+'   QUANTITY:'+itemsincart+'   TOTAL:'+priceincart + '<button class="removeFromCart"> REMOVE </button>');
+
+			}
+
+
+		});
+		}
 
 
 	// removefromcart(sku, product){
@@ -63,7 +94,6 @@ addtocart(){
 			$('#content').empty();
 
 			products(data);
-			//productutil(data);
 		})
 		.catch(error => {
 			console.log("warning Christopher Robins... Error");
