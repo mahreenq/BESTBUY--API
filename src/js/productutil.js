@@ -22,19 +22,52 @@ export class productutil{
         }
 
 
-      //   updatecart(){
-      //
-      // };
+
+        removefromcart(sku){
+    			$(document).on('click', '.removeFromCart', function(){
+    				sessionStorage.getItem(sku);
+    				sessionStorage.removeItem(sku);
+            $('#popup').empty();
+            $("#cartTotalItems").empty();
 
 
+    			})
+    		}
 
-        // removefromcart(sku, product){
-        //   $(document).on('click', '.removeFromCart', function(){
+
+        // updatecart(sku, product){
+        //   $(document).on('click', '.addtocart', function(){
+        //   sessionStorage.getItem(sku,product)
         //
-        //     sessionStorage.removeItem(sku);
+        //               let allkeys = "";
+        //               let item = "";
+        //               let cartobj ="";
+        //               let itemsincart ="";
+        //               let priceincart="";
+        //               $('#popup').empty();
         //
-        //   })
+        //   for (let i=0; i<sessionStorage.length; i++){
+        //
+        //         allkeys = sessionStorage.key(i);
+        //
+        //         item = sessionStorage.getItem(allkeys);
+        //         cartobj = JSON.parse(item);
+        //         itemsincart =  cartobj.qty;
+        //         priceincart = cartobj.price * itemsincart;
+        //
+        //         var createDiv = $("<div></div>");
+        //         createDiv.addClass('singleCartItem');
+        //         $('#popup').append(createDiv);
+        //         createDiv.append('SKU:'+allkeys+'   QUANTITY:'+itemsincart+'   TOTAL:'+priceincart + '<button class="removeFromCart"> REMOVE </button>');
+        //
+        //   }
+        //
+        //
+        // });
         // }
+
+
+
 
 
 }

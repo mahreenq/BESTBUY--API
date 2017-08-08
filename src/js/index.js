@@ -13,6 +13,7 @@ export default class App{
 		this.eventHandler ();
 		this.addtocart();
 		this.updatecart();
+		//this.removefromcart();
 
 	}
  	eventHandler(){
@@ -39,6 +40,9 @@ addtocart(){
 
             let atc= new productutil;
             atc.addtocart(sku,product);
+						atc.removefromcart(sku);
+
+
 
         });
     }
@@ -75,20 +79,17 @@ addtocart(){
 		}
 
 
-	// removefromcart(sku, product){
-	// 	$(document).on('click', '.removeFromCart', function(){
-	// 		let sku = $(this).data("sku");
-	// 		let product = {
-	// 			price : $(this).data("price"),
-	// 			qty : 1,
-	// 		}
-	// 		sessionStorage.removeItem(sku);
-	//
-	// 	})
-	// }
+		// removefromcart(sku){
+		// 	$(document).on('click', '.removeFromCart', function(){
+		// 		sessionStorage.getItem(sku);
+		// 		sessionStorage.removeItem(sku);
+		//
+		// 	})
+		// }
+
+
 
 	initBBCall () {
-		//console.log(this.url);
 		request({url:this.url, api:"8ccddf4rtjz5k5btqam84qak"})
 		.then(data => {
 			$('#content').empty();
