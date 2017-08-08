@@ -141,7 +141,7 @@ var App = function () {
 					item = sessionStorage.getItem(allkeys);
 					cartobj = JSON.parse(item);
 					itemsincart = cartobj.qty;
-					priceincart = cartobj.price * itemsincart;
+					priceincart = (cartobj.price * itemsincart).toFixed(2);
 
 					var createDiv = $("<div></div>");
 					createDiv.addClass('singleCartItem');
